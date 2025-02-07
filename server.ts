@@ -1,21 +1,15 @@
-import http from 'http'
-import db from './db'
-import { initModels } from './models'
+import express, { Request, Response } from 'express';
+import dotenv from 'dotenv';
+import userRoutes from './routes/userRoutes';
 
-async function run() {
-  initModels(db)
-  const hostname = process.env.HOSTNAME || '127.0.0.1'
-  const port = parseInt(process.env.PORT || '3000')
-  
-  const server = http.createServer((req, res) => {
-    res.statusCode = 200
-    res.setHeader('Content-Type', 'text/plain')
-    res.end('Hello World')
-  })
-  
-  server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`)
-  })
-}
+dotenv.config();
+const app = express();
+app.use(express.json()); // Middleware to parse JSON
 
-run()
+
+app.use('/api', userRoutes);
+
+// Start the server
+app.listen(3000, () => {
+    console.log('Server running on http://localhost:3000');
+});
