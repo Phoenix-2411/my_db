@@ -26,18 +26,24 @@ export function initModels(sequelize: Sequelize) {
   Team.initModel(sequelize)
   Attachment.initModel(sequelize)
 
-  User.belongsTo(Client, {
-    as: 'client',
-    foreignKey: 'clientId'
-  })
-  User.belongsTo(Role, {
-    as: 'role',
-    foreignKey: 'roleId'
-  })
-  User.belongsTo(Profile, {
-    as: 'profile',
-    foreignKey: 'profileId'
-  })
+  // User.belongsTo(Client, {
+  //   as: 'client',
+  //   foreignKey: 'clientId'
+  // })
+  // User.belongsTo(Role, {
+  //   as: 'groupRole',
+  //   foreignKey: 'roleId'
+  // })
+  // User.belongsTo(Profile, {
+  //   as: 'profile',
+  //   foreignKey: 'profileId'
+  // })
+  // Define associations
+  User.belongsTo(sequelize.models.Client, { as: 'client', foreignKey: 'clientId' });
+  User.belongsTo(sequelize.models.Role, { as: 'groupRole', foreignKey: 'roleId' }); // updated here
+  User.belongsTo(sequelize.models.Profile, { as: 'profile', foreignKey: 'profileId' });
+  User.hasMany(sequelize.models.TeamUser, { as: 'teamUsers', foreignKey: 'userId' }); // updated here
+  User.hasMany(sequelize.models.Attachment, { as: 'attachments', foreignKey: 'userId' }); // updated here
   Profile.hasOne(User, {
     as: 'user',
     foreignKey: 'profileId'

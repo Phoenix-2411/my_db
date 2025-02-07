@@ -1,13 +1,12 @@
 import express, { Request, Response } from 'express';
-// import db from '../models'; // Adjust if your models path differs
-// import db from '../models/index'; // Adjust if your models path differs
 import { Profile } from '../models/Profile';
 import { Role } from '../models/Role';
 import { Client } from '../models/Client';
 import { User } from '../models/User';
+import { getUsersWithDetails } from './Query';
 
 const router = express.Router();
-
+router.get('/fetch-users', getUsersWithDetails);
 // Route to fetch active users with their details
 router.get('/active-users', async (req: Request, res: Response) => {
     try {
