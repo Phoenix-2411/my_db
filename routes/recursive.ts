@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { User, Profile, Client, Role, TeamUser, Attachment } from '../models';
 
-export async function getUsersWithDetails(req: Request, res: Response) {
+export async function getUsersWithDetai(req: Request, res: Response) {
     try {
         const users = await User.findAll({
             attributes: [
